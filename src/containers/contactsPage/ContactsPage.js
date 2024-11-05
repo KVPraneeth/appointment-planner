@@ -25,6 +25,8 @@ export const ContactsPage = ({ contacts, addContacts }) => {
       setCurrentName("");
       setPhone("");
       setEmail("");
+    } else {
+      alert("Contact already exists");
     }
   };
 

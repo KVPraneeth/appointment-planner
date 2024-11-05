@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { AppointmentForm } from "../../components/appointmentForm/AppointmentForm";
 import { TileList } from "../../components/tileList/TileList";
@@ -16,18 +16,30 @@ export const AppointmentsPage = ({
   const [contact, setContact] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [appointmentClash, setAppointmentClash] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     /*
     Add contact info and clear data  
     */
-    addAppointments(title, contact, date, time);
-    setTitle("");
-    setContact("");
-    setDate("");
-    setTime("");
+    if (!appointmentClash) {
+      addAppointments(title, contact, date, time);
+      setTitle("");
+      setContact("");
+      setDate("");
+      setTime("");
+    } else {
+      alert("Appointment clash");
+    }
   };
+
+  useEffect(() => {
+    const clash = appointments.some(
+      (appointment) => appointment.date === date && appointment.time === time
+    );
+    setAppointmentClash(clash);
+  }, [date, time, appointments]);
 
   return (
     <div>
